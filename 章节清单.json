@@ -66,7 +66,7 @@
           "title": "来接我",
           "file": "正文/第二部/08-来接我.md",
           "kind": "chapter",
-          "diary_entries": 4
+          "diary_entries": 2
         },
         {
           "label": "第9章",
@@ -94,7 +94,7 @@
           "title": "我凭什么死",
           "file": "正文/第二部/12-我凭什么死.md",
           "kind": "chapter",
-          "diary_entries": 4
+          "diary_entries": 5
         }
       ]
     },
@@ -104,38 +104,38 @@
       "chapters": [
         {
           "label": "第13章",
-          "title": "上线",
-          "file": "正文/第三部/13-上线.md",
+          "title": "那明天见",
+          "file": "正文/第三部/13-那明天见.md",
           "kind": "chapter",
-          "diary_entries": 2
+          "diary_entries": 1
         },
         {
           "label": "第14章",
-          "title": "新房",
-          "file": "正文/第三部/14-新房.md",
-          "kind": "chapter",
-          "diary_entries": 8
-        },
-        {
-          "label": "第15章",
-          "title": "那是送我的",
-          "file": "正文/第三部/15-那是送我的.md",
-          "kind": "chapter",
-          "diary_entries": 5
-        },
-        {
-          "label": "第16章",
           "title": "郑哥",
-          "file": "正文/第三部/16-郑哥.md",
+          "file": "正文/第三部/14-郑哥.md",
           "kind": "chapter",
           "diary_entries": 4
         },
         {
-          "label": "第17章",
-          "title": "那明天见",
-          "file": "正文/第三部/17-那明天见.md",
+          "label": "第15章",
+          "title": "新房",
+          "file": "正文/第三部/15-新房.md",
           "kind": "chapter",
-          "diary_entries": 1
+          "diary_entries": 8
+        },
+        {
+          "label": "第16章",
+          "title": "上线",
+          "file": "正文/第三部/16-上线.md",
+          "kind": "chapter",
+          "diary_entries": 6
+        },
+        {
+          "label": "第17章",
+          "title": "那是送我的",
+          "file": "正文/第三部/17-那是送我的.md",
+          "kind": "chapter",
+          "diary_entries": 2
         },
         {
           "label": "第18章",

@@ -22,6 +22,9 @@ This repository starts from the final v4 manuscript of 《下周照常开团》.
 - Read `设定/创作约定.md`, `设定/人物.md`, and `设定/文风.md` before substantive writing.
 - Preserve the established narrator, facts, diary boundaries, and knowledge available to 绯月 at each point. The user's newer instructions override older editorial choices.
 - When changing diary scenes, update `设定/日记场景表.json` and `设定/日记场景与时间.md`.
+- Do not print diary labels, scene titles, or introductory date/location captions in the manuscript. Keep chapter headings and scene breaks; reveal setting through environment, objects, dialogue, and warranted narrator guesses.
+- Scene `title`, `kind`, and `event_time` in the JSON are editor-only references. Use `sequence_in_chapter` and the recorded opening/closing to identify untitled scenes; never reinsert the labels as a parsing shortcut.
+- Scene IDs stay stable when scenes move. Use the chapter manifest and `sequence_in_chapter` (or the explicit `reading_order`) for reading order; sorting scene IDs would undo the nonlinear structure.
 - Regenerate and verify before committing:
 
   ```sh
