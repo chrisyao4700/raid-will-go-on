@@ -1,0 +1,198 @@
+{
+  "title": "下周照常开团",
+  "output": "下周照常开团.md",
+  "parts": [
+    {
+      "label": "第一部",
+      "title": "没有开团",
+      "chapters": [
+        {
+          "label": "第1章",
+          "title": "小满失踪了",
+          "file": "正文/第一部/01-小满失踪了.md",
+          "kind": "chapter",
+          "diary_entries": 1
+        }
+      ]
+    },
+    {
+      "label": "第二部",
+      "title": "日记之间",
+      "chapters": [
+        {
+          "label": "第2章",
+          "title": "她的声音",
+          "file": "正文/第二部/02-她的声音.md",
+          "kind": "chapter",
+          "diary_entries": 1
+        },
+        {
+          "label": "第3章",
+          "title": "学费",
+          "file": "正文/第二部/03-学费.md",
+          "kind": "chapter",
+          "diary_entries": 2
+        },
+        {
+          "label": "第4章",
+          "title": "孩子妈妈",
+          "file": "正文/第二部/04-孩子妈妈.md",
+          "kind": "chapter",
+          "diary_entries": 1
+        },
+        {
+          "label": "第5章",
+          "title": "那顿饭",
+          "file": "正文/第二部/05-那顿饭.md",
+          "kind": "chapter",
+          "diary_entries": 4
+        },
+        {
+          "label": "第6章",
+          "title": "今晚睡哪里",
+          "file": "正文/第二部/06-今晚睡哪里.md",
+          "kind": "chapter",
+          "diary_entries": 3
+        },
+        {
+          "label": "第7章",
+          "title": "门后面",
+          "file": "正文/第二部/07-门后面.md",
+          "kind": "chapter",
+          "diary_entries": 3
+        },
+        {
+          "label": "第8章",
+          "title": "来接我",
+          "file": "正文/第二部/08-来接我.md",
+          "kind": "chapter",
+          "diary_entries": 4
+        },
+        {
+          "label": "第9章",
+          "title": "班费不见了",
+          "file": "正文/第二部/09-班费不见了.md",
+          "kind": "chapter",
+          "diary_entries": 1
+        },
+        {
+          "label": "第10章",
+          "title": "你还敢威胁我",
+          "file": "正文/第二部/10-你还敢威胁我.md",
+          "kind": "chapter",
+          "diary_entries": 1
+        },
+        {
+          "label": "第11章",
+          "title": "你跟不跟我走",
+          "file": "正文/第二部/11-你跟不跟我走.md",
+          "kind": "chapter",
+          "diary_entries": 2
+        },
+        {
+          "label": "第12章",
+          "title": "我凭什么死",
+          "file": "正文/第二部/12-我凭什么死.md",
+          "kind": "chapter",
+          "diary_entries": 4
+        }
+      ]
+    },
+    {
+      "label": "第三部",
+      "title": "城市之间",
+      "chapters": [
+        {
+          "label": "第13章",
+          "title": "上线",
+          "file": "正文/第三部/13-上线.md",
+          "kind": "chapter",
+          "diary_entries": 2
+        },
+        {
+          "label": "第14章",
+          "title": "新房",
+          "file": "正文/第三部/14-新房.md",
+          "kind": "chapter",
+          "diary_entries": 8
+        },
+        {
+          "label": "第15章",
+          "title": "那是送我的",
+          "file": "正文/第三部/15-那是送我的.md",
+          "kind": "chapter",
+          "diary_entries": 5
+        },
+        {
+          "label": "第16章",
+          "title": "郑哥",
+          "file": "正文/第三部/16-郑哥.md",
+          "kind": "chapter",
+          "diary_entries": 4
+        },
+        {
+          "label": "第17章",
+          "title": "那明天见",
+          "file": "正文/第三部/17-那明天见.md",
+          "kind": "chapter",
+          "diary_entries": 1
+        },
+        {
+          "label": "第18章",
+          "title": "只唱一遍",
+          "file": "正文/第三部/18-只唱一遍.md",
+          "kind": "chapter",
+          "diary_entries": 2
+        },
+        {
+          "label": "第19章",
+          "title": "一命服",
+          "file": "正文/第三部/19-一命服.md",
+          "kind": "chapter",
+          "diary_entries": 3
+        },
+        {
+          "label": "第20章",
+          "title": "她想去上海",
+          "file": "正文/第三部/20-她想去上海.md",
+          "kind": "chapter",
+          "diary_entries": 4
+        }
+      ]
+    },
+    {
+      "label": "第四部",
+      "title": "她还想回来",
+      "chapters": [
+        {
+          "label": "第21章",
+          "title": "下周",
+          "file": "正文/第四部/21-下周.md",
+          "kind": "chapter",
+          "diary_entries": 9
+        },
+        {
+          "label": "第22章",
+          "title": "刚走",
+          "file": "正文/第四部/22-刚走.md",
+          "kind": "chapter",
+          "diary_entries": 0
+        },
+        {
+          "label": "第23章",
+          "title": "我来",
+          "file": "正文/第四部/23-我来.md",
+          "kind": "chapter",
+          "diary_entries": 0
+        },
+        {
+          "label": "尾声",
+          "title": "我再听听",
+          "file": "正文/第四部/尾声-我再听听.md",
+          "kind": "epilogue"
+        }
+      ]
+    }
+  ],
+  "baseline": "v4"
+}
