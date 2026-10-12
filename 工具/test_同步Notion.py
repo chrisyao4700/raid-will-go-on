@@ -51,9 +51,53 @@ class ClientTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             sync.replacement("中" * 200_000)
 
+    def test_scene_breaks_become_notion_dividers_without_changing_prose(self):
+        source = (
+            "路灯和校门退下去时，眼前已经换了地方。\n\n* * *\n\n"
+            "柜台前，她拿出装钱的纸袋。\n\n"
+            "照片发过去，她补上一句：“这个你也要记得夸。”\n\n* * *\n"
+        )
+        expected = source.replace("* * *", "---")
+        self.assertEqual(sync.notion_markdown(source), expected)
+        self.assertEqual(sync.notion_markdown(expected), expected)
+        prose = "* 列表有内容\n\n我说：“* * *”。\n\n---\n"
+        self.assertEqual(sync.notion_markdown(prose), prose)
+
+    def test_all_manuscript_scene_breaks_are_converted(self):
+        sources = [
+            p.read_text() for p in (sync.ROOT / "正文").rglob("*.md")
+        ]
+        breaks = sum(text.splitlines().count("* * *") for text in sources)
+        markdown, _, _, _ = sync.render_manuscript()
+        self.assertGreater(breaks, 0)
+        self.assertNotIn("* * *", markdown.splitlines())
+        for source in sources:
+            self.assertEqual(
+                sync.notion_markdown(source), source.replace("\n* * *\n", "\n---\n")
+            )
+
+    def test_rendered_content_rejects_nested_empty_lists(self):
+        for markdown in (
+            "# 小说\n\n-\n\t-\n\t\t-\n\n正文",
+            "# 小说\n\n* \n\n正文",
+        ):
+            with self.assertRaisesRegex(RuntimeError, "空列表"):
+                sync.verify_rendered_content({"markdown": markdown})
+        sync.verify_rendered_content({"markdown": "# 小说\n\n---\n\n正文\n- 有内容"})
+
+    def test_rendered_content_must_be_complete(self):
+        for result in (
+            {},
+            {"markdown": ""},
+            {"markdown": "# 小说", "truncated": True},
+            {"markdown": "# 小说", "unknown_block_ids": ["unknown"]},
+        ):
+            with self.assertRaisesRegex(RuntimeError, "完整正文"):
+                sync.verify_rendered_content(result)
+
     def test_async_success_polls_known_api_host(self):
         page = {"object": "page", "id": TARGET}
-        result = {"object": "page_markdown", "id": TARGET}
+        result = {"object": "page_markdown", "id": TARGET, "markdown": "# 正文"}
         task = {"object": "async_task", "id": "task_test", "status": "queued",
                 "status_url": "https://example.com/leak", "poll_after_seconds": 2}
         client, requests, sleeps = self.client([
@@ -65,6 +109,15 @@ class ClientTests(unittest.TestCase):
         self.assertEqual([r.method for r in requests], ["GET", "PATCH", "GET", "GET"])
         self.assertTrue(all(r.full_url.startswith(sync.API + "/") for r in requests))
         self.assertEqual(sleeps, [2, 2])
+
+    def test_sync_rejects_success_response_with_empty_list(self):
+        client, requests, _ = self.client([
+            {"object": "page", "id": TARGET},
+            {"object": "page_markdown", "id": TARGET, "markdown": "# 正文\n\n-\n\t-\n"},
+        ])
+        with self.assertRaisesRegex(RuntimeError, "空列表"):
+            client.sync(TARGET, sync.replacement("# 正文"))
+        self.assertEqual(len(requests), 2)
 
     def test_async_failure_does_not_pass_or_expose_response(self):
         client, _, _ = self.client([])

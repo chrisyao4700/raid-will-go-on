@@ -50,6 +50,25 @@ def git(*args):
     ).strip()
 
 
+def notion_markdown(markdown):
+    """Notion 把 * * * 解析为嵌套空列表；发布时统一使用其横线语法。"""
+    return re.sub(r"(?m)^ {0,3}(?:\*[ \t]*){3,}$", "---", markdown)
+
+
+def verify_rendered_content(result):
+    """检查 Notion 写入结果的完整正文，拒绝把空列表误判为发布成功。"""
+    markdown = result.get("markdown")
+    if (
+        not isinstance(markdown, str)
+        or not markdown.strip()
+        or result.get("truncated")
+        or result.get("unknown_block_ids")
+    ):
+        raise RuntimeError("Notion 已写入，但未返回完整正文，无法确认页面排版")
+    if re.search(r"(?m)^[ \t]*[-*][ \t]*$", markdown):
+        raise RuntimeError("Notion 已写入，但正文包含空列表，请检查 Markdown 分隔符")
+
+
 def render_manuscript():
     """与合稿工具复用校验和渲染逻辑，只读取正文及章节清单。"""
     spec = importlib.util.spec_from_file_location("manuscript", ROOT / "工具/合稿.py")
@@ -66,7 +85,7 @@ def render_manuscript():
         f"提交时间：{updated}。\n\n"
     )
     first_line, body = book.split("\n", 1)
-    markdown = first_line + "\n\n" + header + body.lstrip("\n")
+    markdown = notion_markdown(first_line + "\n\n" + header + body.lstrip("\n"))
     return markdown, revision, digest, counts
 
 
@@ -188,6 +207,7 @@ class Notion:
         result = self.wait(self.request("PATCH", f"/pages/{target}/markdown", data))
         if result.get("object") != "page_markdown" or page_id(result.get("id", "")) != target:
             raise RuntimeError("Notion 未返回对应页面的成功写入结果")
+        verify_rendered_content(result)
 
 
 def main():
@@ -210,7 +230,7 @@ def main():
             raise ValueError("缺少 NOTION_TOKEN；请配置 GitHub Actions Secret")
         target = page_id(os.environ.get("NOTION_PAGE_ID", ""))
         Notion(token).sync(target, data)
-        print("Notion 已确认全文更新成功")
+        print("Notion 已确认全文更新成功；正文回读校验通过（空列表：0）")
         return 0
     except (OSError, ValueError, RuntimeError, subprocess.CalledProcessError) as error:
         print(f"同步失败：{error}", file=sys.stderr)
