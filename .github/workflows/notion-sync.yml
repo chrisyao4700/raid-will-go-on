@@ -1,0 +1,58 @@
+name: Sync manuscript to Notion
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# 外部页只需最新 main；写入过程中不取消任务，避免异步旧稿随后覆盖新稿。
+# 队列中的多次 push 可能合并为一次发布。
+concurrency:
+  group: notion-manuscript
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Check manuscript and sync behavior
+        run: |
+          python3 工具/合稿.py --check
+          python3 -m unittest discover -s 工具 -p 'test_*.py' -v
+          python3 工具/同步Notion.py --dry-run
+
+  publish:
+    needs: validate
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          # 重跑旧的 CI 也发布当前 main，避免把阅读页退回旧稿。
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Validate current main
+        run: |
+          python3 工具/合稿.py --check
+          python3 -m unittest discover -s 工具 -p 'test_*.py' -v
+      - name: Update reading page
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_PAGE_ID: 584e0b9a-371e-82a2-ba26-8108739458ab
+        run: python3 工具/同步Notion.py
